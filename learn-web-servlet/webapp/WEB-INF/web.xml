@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+	id="WebApp_ID" version="3.0">
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+		<welcome-file>index.htm</welcome-file>
+		<welcome-file>index.jsp</welcome-file>
+		<welcome-file>default.html</welcome-file>
+		<welcome-file>default.htm</welcome-file>
+		<welcome-file>default.jsp</welcome-file>
+	</welcome-file-list>
+	
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>
+			classpath:context.xml,classpath:web.xml
+		</param-value>
+	</context-param>
+	<session-config>
+		<session-timeout>1</session-timeout>
+	</session-config>
+	<!-- servletContainerTest -->
+	<servlet>
+		<servlet-name>containerTest</servlet-name>
+		<servlet-class>com.feng.learn.servlet.ContainerTest</servlet-class>
+		<init-param>
+			<description>containerTestInitParam</description>
+			<param-name>personName</param-name>
+			<param-value>zhangzhanfeng</param-value>
+		</init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>containerTest</servlet-name>
+		<url-pattern>/test/test</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>attrTest</servlet-name>
+		<servlet-class>com.feng.learn.servlet.AttrTest</servlet-class>
+		<init-param>
+			<description>containerTestInitParam</description>
+			<param-name>personName</param-name>
+			<param-value>zhangzhanfeng</param-value>
+		</init-param>
+		<init-param>
+			<description>containerTestInitParam</description>
+			<param-name>person.age</param-name>
+			<param-value>26</param-value>
+		</init-param>
+		<init-param>
+			<description>containerTestInitParam</description>
+			<param-name>person.age</param-name>
+			<param-value>30</param-value>
+		</init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>attrTest</servlet-name>
+		<url-pattern>/test/attr</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>httpSessionTest</servlet-name>
+		<servlet-class>com.feng.learn.servlet.HttpSessionTest</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>httpSessionTest</servlet-name>
+		<url-pattern>/test/session</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>httpSessionTest2</servlet-name>
+		<servlet-class>com.feng.learn.servlet.HttpSessionTest</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>httpSessionTest2</servlet-name>
+		<url-pattern>/test/session2</url-pattern>
+	</servlet-mapping>
+	
+</web-app>
