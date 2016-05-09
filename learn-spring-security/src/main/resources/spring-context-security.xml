@@ -6,9 +6,11 @@
            http://www.springframework.org/schema/beans/spring-beans.xsd
            http://www.springframework.org/schema/security
            http://www.springframework.org/schema/security/spring-security.xsd">
+	<http pattern="/login" security="none"></http>
 	<http auto-config="true">
 		<intercept-url pattern="/**" access="ROLE_USER" />
 	</http>
+	
 	<authentication-manager>
 		<authentication-provider>
 			<user-service>
