@@ -22,6 +22,10 @@ public class AttrTest extends HttpServlet {
 	logger.debug("servletName: {}", servletConfig.getServletName());
 	logger.debug("servletContext: {}", servletConfig.getServletContext());
 	logger.debug("servletParamNames: {}", Collections.list(servletConfig.getInitParameterNames()));
+	logger.debug("characterEncoding: {}", resp.getCharacterEncoding());
+	resp.getWriter().println("attrTest");
+	resp.getWriter().flush();
+	throw new RuntimeException("TEsaskjdflk;jsl;");
     }
 
     @Override

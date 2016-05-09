@@ -19,8 +19,31 @@
 		</param-value>
 	</context-param>
 	<session-config>
-		<session-timeout>1</session-timeout>
+		<session-timeout>60</session-timeout>
 	</session-config>
+	
+	<filter>
+		<filter-name>characterEncodingFilter</filter-name>
+		<filter-class>com.feng.learn.servlet.filter.CharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>characterEncodingFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+	<filter>
+		<filter-name>logFilter</filter-name>
+		<filter-class>com.feng.learn.servlet.filter.LogFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>logFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
 	<!-- servletContainerTest -->
 	<servlet>
 		<servlet-name>containerTest</servlet-name>
@@ -75,6 +98,15 @@
 	<servlet-mapping>
 		<servlet-name>httpSessionTest2</servlet-name>
 		<url-pattern>/test/session2</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>redirect</servlet-name>
+		<servlet-class>com.feng.learn.servlet.DispatcherTest</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>redirect</servlet-name>
+		<url-pattern>/test/redirect</url-pattern>
 	</servlet-mapping>
 	
 </web-app>

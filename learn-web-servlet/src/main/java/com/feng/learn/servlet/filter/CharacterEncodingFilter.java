@@ -8,26 +8,34 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class LogFilter implements Filter {
+public class CharacterEncodingFilter implements Filter {
+
+    private FilterConfig config;
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-	filterConfig.getServletContext();
-
+	this.config = filterConfig;
     }
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 	    throws IOException, ServletException {
-	logger.info("logFilter.before..");
+
+	logger.debug("CharacterEncodingFilter-characterEncoding1: {}", response.getCharacterEncoding());
+	String encoding = config.getInitParameter("encoding");
+	response.setCharacterEncoding(encoding);
+	logger.debug("CharacterEncodingFilter-characterEncoding2: {}", response.getCharacterEncoding());
 	chain.doFilter(request, response);
-	logger.info("logFilter.after..");
+
+	HttpServletResponse resp = (HttpServletResponse) response;
+	resp.addHeader("characterEncoding", encoding);
     }
 
     @Override
