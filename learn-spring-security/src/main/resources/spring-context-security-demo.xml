@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:beans="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/security
+		http://www.springframework.org/schema/security/spring-security-3.2.xsd">
+
+	<http pattern="/static/**" security="none" />
+
+	<!-- channels -->
+	<http>
+		<intercept-url pattern="/security/**" requires-channel="https" />
+		<intercept-url pattern="/**" requires-channel="any" />
+		<port-mappings>
+			<port-mapping http="9080" https="9443" />
+		</port-mappings>
+	</http>
+
+	<!-- form-login -->
+	<http>
+		<intercept-url pattern="/login.html*" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+		<intercept-url pattern="/**" access="hasRole('user')" />
+		<form-login login-page="/html/login.html"
+			login-processing-url="/login" authentication-failure-url="/login/failed"
+			default-target-url="/login/succeeded" always-use-default-target="false" />
+		<logout invalidate-session="true" logout-url="/logout"
+			logout-success-url="/index.html" delete-cookies="*,*,*"
+			success-handler-ref="***" />
+	</http>
+
+	<http>
+		<session-management
+			session-authentication-error-url="***" session-fixation-protection="none"
+			invalid-session-url="invalidSession.html">
+			<concurrency-control max-sessions="1"
+				error-if-maximum-exceeded="true" expired-url="***" />
+		</session-management>
+	</http>
+
+	<authentication-manager>
+
+		<!-- authentication-provider initialize a DaoAuthenticatonProvider bean -->
+
+		<authentication-provider>
+			<password-encoder ref="bcryptEncoder" />
+			<user-service>
+				<user name="jimi" password="jimispassword" authorities="ROLE_USER, ROLE_ADMIN" />
+				<user name="bob" password="bobspassword" authorities="ROLE_USER" />
+			</user-service>
+		</authentication-provider>
+
+		<authentication-provider user-service-ref="****">
+			<password-encoder base64="true" hash="plaintext">
+				<salt-source user-property="username" />
+			</password-encoder>
+		</authentication-provider>
+
+		<authentication-provider>
+			<jdbc-user-service data-source-ref="***" cache-ref="***"
+				users-by-username-query="***" authorities-by-username-query="***"
+				group-authorities-by-username-query="***" role-prefix="***" />
+		</authentication-provider>
+
+		<authentication-provider user-service-ref="jdbcUserDetailsServiceImpl" />
+
+		<!-- myOwnAuthenticationProvider 必须实现AuthenticationProvider接口 -->
+		<authentication-provider ref="myOwnAuthenticationProvider" />
+
+	</authentication-manager>
+
+	<beans:bean name="bcryptEncoder"
+		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
+
+
+	<beans:bean id="jdbcUserDetailsServiceImpl"
+		class="org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl">
+		<beans:property name="dataSource" ref="****" />
+	</beans:bean>
+
+	<beans:bean id="myOwnAuthenticationProvider" class="****" />
+</beans:beans>

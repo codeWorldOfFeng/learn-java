@@ -6,12 +6,17 @@ import java.io.PrintWriter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 public class LoginController {
+
+    @Autowired
+    private UserDetailsService userDetailService;
 
     /**
      * 
@@ -21,9 +26,9 @@ public class LoginController {
      * @param password
      * @throws IOException
      */
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public void login(HttpServletRequest req, HttpServletResponse resp,
-	    String username, String password) throws IOException {
+    @RequestMapping(value = "/user/login", method = RequestMethod.POST)
+    public void login(HttpServletRequest req, HttpServletResponse resp, String username, String password)
+	    throws IOException {
 	resp.setContentType("text/plain;charset=utf-8");
 	PrintWriter out = resp.getWriter();
 	if (check(username, password)) {
