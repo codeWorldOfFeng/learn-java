@@ -28,10 +28,10 @@ public class CharacterEncodingFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 	    throws IOException, ServletException {
 
-	logger.debug("CharacterEncodingFilter-characterEncoding1: {}", response.getCharacterEncoding());
+	logger.debug("CharacterEncodingFilter-default: {}", response.getCharacterEncoding());
 	String encoding = config.getInitParameter("encoding");
 	response.setCharacterEncoding(encoding);
-	logger.debug("CharacterEncodingFilter-characterEncoding2: {}", response.getCharacterEncoding());
+	logger.debug("CharacterEncodingFilter-appSetting: {}", response.getCharacterEncoding());
 	chain.doFilter(request, response);
 
 	HttpServletResponse resp = (HttpServletResponse) response;
